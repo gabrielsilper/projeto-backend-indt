@@ -1,5 +1,6 @@
 import { appDataSource } from 'database/data-source';
 import express from 'express';
+import indexRoutes from 'routes/index.routes';
 import { DataSource } from 'typeorm';
 
 export default class App {
@@ -21,6 +22,7 @@ export default class App {
     this.server.get('/api/v1/live', (req, res) => {
       res.send('INDT Reserve Monitor API v1 is live!');
     });
+    this.server.use('/api/v1', indexRoutes);
   }
 
   public start(PORT: string | number): void {
