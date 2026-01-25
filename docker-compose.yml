@@ -1,0 +1,50 @@
+services:
+  postgres-server:
+    image: postgres
+    container_name: postgres-server
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=123
+    ports:
+      - '5432:5432'
+    networks:
+      - fullstack-indt
+
+  pg-admin-web:
+    image: dpage/pgadmin4:latest
+    container_name: pg-admin-web
+    restart: always
+    depends_on:
+      - postgres-server
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - '8080:80'
+    networks:
+      - fullstack-indt
+
+  api:
+    container_name: reserve-monitor-api
+    user: node
+    image: node:24-slim
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    environment:
+      - PORT=${PORT}
+    volumes:
+      - ./:/usr/app
+    working_dir: /usr/app
+    env_file:
+      - .env
+    command: bash
+    tty: true
+    stdin_open: true
+    depends_on:
+      - postgres-server
+
+networks:
+  fullstack-indt:
+    driver: bridge

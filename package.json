@@ -1,0 +1,43 @@
+{
+  "name": "projeto-backend-indt",
+  "version": "1.0.0",
+  "description": "projeto de monitoramento de uma reserva",
+  "keywords": [
+    "typescript",
+    "monitoramento",
+    "backend",
+    "express",
+    "postgres"
+  ],
+  "homepage": "https://github.com/gabrielsilper/projeto-backend-indt#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielsilper/projeto-backend-indt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielsilper/projeto-backend-indt.git"
+  },
+  "license": "ISC",
+  "author": "Gabriel Pereira",
+  "type": "module",
+  "main": "build/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch src --ext ts --exec tsx src/server.ts",
+    "dev-env": "nodemon --watch src --ext ts --exec node --env-file=.env tsx src/server.ts"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.17.2",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.10",
+    "nodemon": "^3.1.11",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
