@@ -1,6 +1,6 @@
 import App from "app";
 
-const PORT = process.env.PORT || 3000;
+const APP_PORT = process.env.APP_PORT || 3000;
 
 const app = new App();
-app.start(PORT);
+app.start(APP_PORT);
