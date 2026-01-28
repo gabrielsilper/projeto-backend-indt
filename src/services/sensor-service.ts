@@ -1,9 +1,8 @@
 import SensorCreationDTO from 'dtos/sensor-creation-dto';
-import { appDataSource } from 'database/data-source';
-import { Sensor } from 'entities/sensor';
+import SensorRepository from 'repositories/sensor-repository';
 
 export default class SensorService {
-  private sensorRepository = appDataSource.getRepository(Sensor);
+  constructor(private sensorRepository: SensorRepository) {}
 
   async getAllSensors() {
     return this.sensorRepository.find();
