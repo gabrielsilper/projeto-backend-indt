@@ -1,6 +1,7 @@
 import SensorCreationDTO from 'dtos/sensor-creation-dto';
 import SensorRepository from 'repositories/sensor-repository';
-import { SensorNotFound } from 'errors/SensorNotFound';
+import { SensorNotFound } from 'errors/sensor-not-found.error';
+import { SensorAlreadyExists } from 'errors/sensor-already-exists.error';
 
 export default class SensorService {
   constructor(private sensorRepository: SensorRepository) {}
@@ -20,6 +21,12 @@ export default class SensorService {
   }
 
   async createSensor(sensorData: SensorCreationDTO) {
+    const serialNumberExists = await this.sensorRepository.existsBy({ serialNumber: sensorData.serialNumber });
+
+    if (serialNumberExists) {
+      throw new SensorAlreadyExists();
+    }
+
     const sensor = this.sensorRepository.create({ ...sensorData });
     return this.sensorRepository.save(sensor);
   }
