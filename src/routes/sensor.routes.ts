@@ -10,5 +10,7 @@ const sensorController = new SensorController(sensorService);
 sensorRouter.get('/', (req, res) => sensorController.getAllSensors(req, res));
 sensorRouter.post('/', (req, res) => sensorController.createSensor(req, res));
 sensorRouter.get('/:id', (req, res) => sensorController.getSensorById(req, res));
+sensorRouter.put('/:id', (req, res) => sensorController.updateSensor(req, res));
+sensorRouter.delete('/:id', (req, res) => sensorController.deleteSensor(req, res));
 
 export default sensorRouter;

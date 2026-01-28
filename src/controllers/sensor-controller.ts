@@ -21,4 +21,17 @@ export default class SensorController {
     const newSensor = await this.sensorService.createSensor(sensorData);
     return res.status(201).json(newSensor);
   }
+
+  async updateSensor(req: Request, res: Response) {
+    const { id } = req.params;
+    const sensorData = req.body as Partial<SensorCreationDTO>;
+    const updatedSensor = await this.sensorService.updateSensor(id as string, sensorData);
+    return res.json(updatedSensor);
+  }
+
+  async deleteSensor(req: Request, res: Response) {
+    const { id } = req.params;
+    await this.sensorService.deleteSensor(id as string);
+    return res.status(204).send();
+  }
 }
