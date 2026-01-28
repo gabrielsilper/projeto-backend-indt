@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 import { SensorNotFound } from 'errors/sensor-not-found.error';
 import { SensorAlreadyExists } from 'errors/sensor-already-exists.error';
 
+// TODO - Colocar uma criação de log desse erros com winston e criar um tabela para armazenar as informações
 export const errorHandler = (
   error: Error,
   _req: Request,
