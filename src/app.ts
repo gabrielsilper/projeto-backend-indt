@@ -1,7 +1,10 @@
 import { appDataSource } from 'database/data-source';
 import express from 'express';
 import indexRoutes from 'routes/index.routes';
+import { errorHandler } from 'middlewares/error-handler';
 import { DataSource } from 'typeorm';
+import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
 
 export default class App {
   public readonly server: express.Express;
@@ -12,10 +15,20 @@ export default class App {
     this.db = appDataSource;
     this.config();
     this.routes();
+    this.errorHandling();
   }
 
   private config(): void {
     this.server.use(express.json());
+    this.server.use(morgan('common'));
+    this.server.use(
+      rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+        standardHeaders: true,
+        legacyHeaders: false,
+      }),
+    );
   }
 
   private routes(): void {
@@ -23,6 +36,10 @@ export default class App {
       res.send('INDT Reserve Monitor API v1 is live!');
     });
     this.server.use('/api/v1', indexRoutes);
+  }
+
+  private errorHandling(): void {
+    this.server.use(errorHandler);
   }
 
   public start(PORT: string | number): void {
