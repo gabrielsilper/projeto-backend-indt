@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ZodError } from 'zod';
 import { SensorNotFound } from 'errors/SensorNotFound';
 
 export const errorHandler = (
@@ -10,6 +11,16 @@ export const errorHandler = (
   if (error instanceof SensorNotFound) {
     return res.status(404).json({
       message: error.message,
+    });
+  }
+
+  if (error instanceof ZodError) {
+    return res.status(400).json({
+      message: 'Validation error',
+      errors: error.issues.map((err) => ({
+        field: err.path.join('.'),
+        message: err.message,
+      })),
     });
   }
 
