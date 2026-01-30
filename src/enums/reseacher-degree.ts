@@ -1,0 +1,7 @@
+export enum ResearcherDegree {
+  INDEFINIDO,
+  GRADUACAO,
+  ESPECIALIZACAO,
+  MESTRADO,
+  DOUTORADO,
+}
