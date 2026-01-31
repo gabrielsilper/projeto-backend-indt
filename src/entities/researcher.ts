@@ -25,13 +25,13 @@ export default class Researcher {
   password!: string;
 
   @Column({ type: 'varchar', nullable: true })
-  specialty!: string;
+  specialty?: string;
 
   @Column({ type: 'int', enum: ResearcherDegree, nullable: false })
   degree!: ResearcherDegree;
 
   @Column({ type: 'varchar', nullable: true })
-  research!: string;
+  research?: string;
 
   @Column({ type: 'date', nullable: false })
   birthDate!: Date;
