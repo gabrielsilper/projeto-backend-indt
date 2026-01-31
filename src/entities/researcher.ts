@@ -33,12 +33,12 @@ export default class Researcher {
   @Column({ type: 'varchar', nullable: true })
   research?: string;
 
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'date', nullable: false, name: 'birth_date' })
   birthDate!: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 }
