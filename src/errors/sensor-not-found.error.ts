@@ -1,4 +1,4 @@
-export class SensorNotFound extends Error {
+export class SensorNotFoundError extends Error {
   constructor(message: string = 'Sensor not found!') {
     super(message);
   }

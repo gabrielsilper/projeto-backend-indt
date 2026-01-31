@@ -1,44 +1,44 @@
 import SensorCreationDTO from 'dtos/sensor-creation-dto';
 import SensorRepository from 'repositories/sensor-repository';
-import { SensorNotFound } from 'errors/sensor-not-found.error';
-import { SensorAlreadyExists } from 'errors/sensor-already-exists.error';
+import { SensorNotFoundError } from 'errors/sensor-not-found.error';
+import { SensorAlreadyExistsError } from 'errors/sensor-already-exists.error';
 
 export default class SensorService {
   constructor(private sensorRepository: SensorRepository) {}
 
-  async getAllSensors() {
+  async getAll() {
     return this.sensorRepository.find();
   }
 
-  async getSensorById(id: string) {
+  async getById(id: string) {
     const sensor = await this.sensorRepository.findOneBy({ id });
 
     if (!sensor) {
-      throw new SensorNotFound();
+      throw new SensorNotFoundError();
     }
 
     return sensor;
   }
 
-  async createSensor(sensorData: SensorCreationDTO) {
+  async create(sensorData: SensorCreationDTO) {
     const serialNumberExists = await this.sensorRepository.existsBy({ serialNumber: sensorData.serialNumber });
 
     if (serialNumberExists) {
-      throw new SensorAlreadyExists();
+      throw new SensorAlreadyExistsError();
     }
 
     const sensor = this.sensorRepository.create({ ...sensorData });
     return this.sensorRepository.save(sensor);
   }
 
-  async updateSensor(id: string, sensorData: Partial<SensorCreationDTO>) {
-    const sensor = await this.getSensorById(id);
-    this.sensorRepository.merge(sensor, sensorData);
-    return this.sensorRepository.save(sensor);
+  async update(id: string, sensorData: Partial<SensorCreationDTO>) {
+    const sensor = await this.getById(id);
+    const updatedSensor = this.sensorRepository.merge(sensor, sensorData);
+    return this.sensorRepository.save(updatedSensor);
   }
 
-  async deleteSensor(id: string) {
-    const sensor = await this.getSensorById(id);
+  async delete(id: string) {
+    const sensor = await this.getById(id);
     return this.sensorRepository.remove(sensor);
   }
 }

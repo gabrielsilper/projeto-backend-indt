@@ -21,5 +21,3 @@ export const createSensorSchema = z.object({
     .max(120, 'Description must have at most 120 characters')
     .optional(),
 });
-
-export type CreateSensorInput = z.infer<typeof createSensorSchema>;
