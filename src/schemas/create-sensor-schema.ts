@@ -9,7 +9,7 @@ export const createSensorSchema = z.object({
 
   serialNumber: z
     .string('Serial number is required and must be a string')
-    .length(10, 'Serial number must have exactly asdasdasd characters')
+    .length(10, 'Serial number must have exactly 10 characters')
     .regex(
       /^(?=.*[A-Z])(?=.*\d)/,
       'Serial number must contain uppercase letters and numbers',
