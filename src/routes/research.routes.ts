@@ -2,9 +2,10 @@ import ResearcherController from 'controllers/researcher-controller';
 import { Router } from 'express';
 import ResearcherRepository from 'repositories/researcher-repository';
 import ResearcherService from 'services/researcher-service';
+import Bcrypt from 'utils/bcrypt';
 
 const researcherRouter = Router();
-const researcherService = new ResearcherService(new ResearcherRepository());
+const researcherService = new ResearcherService(new ResearcherRepository(), new Bcrypt());
 const researcherController = new ResearcherController(researcherService);
 
 researcherRouter.get('/', (req, res) => researcherController.getAll(req, res));

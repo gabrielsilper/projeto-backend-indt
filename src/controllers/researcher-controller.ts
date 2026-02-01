@@ -20,7 +20,7 @@ export default class ResearcherController {
   async create(req: Request, res: Response) {
     const researcherData = req.body as ResearcherCreationDto;
     const newResearcher = await this.researcherService.create(researcherData);
-    return res.status(201).json(newResearcher.toDto);
+    return res.status(201).json(newResearcher.toDto());
   }
 
   async update(req: Request, res: Response) {
@@ -30,7 +30,7 @@ export default class ResearcherController {
       id as string,
       researcherData,
     );
-    return res.json(updatedResearcher.toDto);
+    return res.json(updatedResearcher.toDto());
   }
 
   async delete(req: Request, res: Response) {

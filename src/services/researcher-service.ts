@@ -2,10 +2,14 @@ import ResearcherCreationDto from 'dtos/researcher-creation-dto';
 import { EmailAlreadyExistsError } from 'errors/email-already-exists-error';
 import { RegistrationAlreadyExistsError } from 'errors/registration-already-exists-error';
 import { ResearcherNotFoundError } from 'errors/researcher-not-found.error';
+import Encrypter from 'interfaces/encrypter';
 import ResearcherRepository from 'repositories/researcher-repository';
 
 export default class ResearcherService {
-  constructor(private researcherRepository: ResearcherRepository) {}
+  constructor(
+    private researcherRepository: ResearcherRepository,
+    private encrypter: Encrypter,
+  ) {}
 
   async getAll() {
     return this.researcherRepository.find();
@@ -38,7 +42,9 @@ export default class ResearcherService {
       throw new EmailAlreadyExistsError();
     }
 
-    return this.researcherRepository.save({ ...researcherData });
+    const password = await this.encrypter.encrypt(researcherData.password);
+
+    return this.researcherRepository.save({ ...researcherData, password });
   }
 
   async update(id: string, researcherData: Partial<ResearcherCreationDto>) {
@@ -52,6 +58,6 @@ export default class ResearcherService {
 
   async delete(id: string) {
     const researcher = await this.getById(id);
-    await this.researcherRepository.delete(researcher);
+    await this.researcherRepository.remove(researcher);
   }
 }
