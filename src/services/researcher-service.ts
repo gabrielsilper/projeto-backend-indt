@@ -44,7 +44,8 @@ export default class ResearcherService {
 
     const password = await this.encrypter.encrypt(researcherData.password);
 
-    return this.researcherRepository.save({ ...researcherData, password });
+    const researcher = this.researcherRepository.create({...researcherData, password});
+    return this.researcherRepository.save(researcher);
   }
 
   async update(id: string, researcherData: Partial<ResearcherCreationDto>) {

@@ -50,7 +50,7 @@ export const createResearcherSchema = z.object({
     .max(100, 'Research must have at most 100 characters')
     .optional(),
 
-  birthDate: z.date(
-    'Birth date is required and must be a Date string. Format: YYYY-MM-DD (ISO 8601)',
+  birthDate: z.coerce.date(
+    'Birth date is required and must be a Date. Format: YYYY-MM-DD (ISO 8601)',
   ).refine(date => DateUtils.isAdult(date), 'Researcher must be at least 18 years old'),
 });
