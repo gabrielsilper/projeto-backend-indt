@@ -7,26 +7,30 @@ export default class ResearcherController {
 
   async getAll(_req: Request, res: Response) {
     const researchers = await this.researcherService.getAll();
-    return res.json(researchers);
+    const researchersDtos = researchers.map((researcher) => researcher.toDto());
+    return res.json(researchersDtos);
   }
 
   async getById(req: Request, res: Response) {
     const { id } = req.params;
     const researcher = await this.researcherService.getById(id as string);
-    return res.json(researcher);
+    return res.json(researcher.toDto());
   }
 
   async create(req: Request, res: Response) {
     const researcherData = req.body as ResearcherCreationDto;
     const newResearcher = await this.researcherService.create(researcherData);
-    return res.status(201).json(newResearcher);
+    return res.status(201).json(newResearcher.toDto);
   }
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const researcherData = req.body as Partial<ResearcherCreationDto>;
-    const updatedResearcher = await this.researcherService.update(id as string, researcherData);
-    return res.json(updatedResearcher);
+    const updatedResearcher = await this.researcherService.update(
+      id as string,
+      researcherData,
+    );
+    return res.json(updatedResearcher.toDto);
   }
 
   async delete(req: Request, res: Response) {

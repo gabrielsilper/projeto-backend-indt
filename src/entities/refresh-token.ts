@@ -21,7 +21,7 @@ export default class RefreshToken {
   @Column({ type: 'timestamp', nullable: true, name: 'expire_in' })
   expireIn?: Date;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   revoked!: boolean;
 
   @ManyToOne(() => Researcher, { onDelete: 'CASCADE' })

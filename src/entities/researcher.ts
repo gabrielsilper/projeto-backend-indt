@@ -1,3 +1,4 @@
+import ResearcherDto from 'dtos/researcher-dto';
 import { ResearcherDegree } from 'enums/reseacher-degree';
 import {
   Column,
@@ -41,4 +42,17 @@ export default class Researcher {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
+
+  public toDto(): ResearcherDto {
+    return {
+      id: this.id,
+      registration: this.registration,
+      name: this.name,
+      email: this.email,
+      specialty: this.specialty,
+      degree: this.degree,
+      research: this.research,
+      birthDate: this.birthDate,
+    };
+  }
 }

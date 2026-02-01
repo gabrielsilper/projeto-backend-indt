@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import "reflect-metadata"
 
 const username = process.env.POSTGRES_USER;
 const password = process.env.POSTGRES_PASSWORD;
