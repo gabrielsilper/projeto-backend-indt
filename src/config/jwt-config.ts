@@ -11,12 +11,6 @@ interface JwtConfig {
 
 export type jwtType = 'access' | 'refresh';
 
-export interface TokenPayload {
-  sub: string;
-  jti: string;
-  type: jwtType;
-}
-
 function getEnvOrThrow(name: string): string {
   const value = process.env[name];
   if (!value) {

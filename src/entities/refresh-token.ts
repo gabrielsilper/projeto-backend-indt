@@ -15,6 +15,15 @@ export default class RefreshToken {
   @Column({ type: 'varchar', nullable: false, length: 255 })
   jti!: string;
 
+  @Column({ type: 'varchar', nullable: true, name: 'session_id' })
+  sessionId!: string;
+
+  @Column({ type: 'varchar', nullable: true, name: 'user_agent' })
+  userAgent!: string;
+
+  @Column({ type: 'varchar', nullable: true, name: 'ip_address' })
+  ipAddress!: string;
+
   @Column({ type: 'varchar', nullable: false, length: 255, name: 'token_hash' })
   tokenHash!: string;
 
