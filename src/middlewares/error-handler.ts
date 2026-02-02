@@ -43,7 +43,9 @@ export const errorHandler = (
   }
 
   return res.status(500).json({
+    // TODO - Remover o stack e message futuramente
     message: 'Internal server error',
-    error: error.message
+    error: error.message,
+    stack: error.stack,
   });
 };

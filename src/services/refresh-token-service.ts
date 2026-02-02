@@ -47,7 +47,8 @@ export default class RefreshTokenService {
     });
     const tokenHash = await this.encrypter.encrypt(token);
 
-    const expireIn = ms(getJwtConfig('refresh').expiresIn as ms.StringValue);
+    const expiresInMs = ms(getJwtConfig('refresh').expiresIn as ms.StringValue);
+    const expireIn = new Date(Date.now() + expiresInMs);
 
     await this.refreshTokenRepository.update(
       { jti },
