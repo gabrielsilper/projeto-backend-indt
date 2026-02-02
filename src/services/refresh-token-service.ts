@@ -1,4 +1,3 @@
-import { TokenPayload } from 'interfaces/token-payload';
 import ITokenService from 'interfaces/token-service';
 import RefreshTokenRepository from 'repositories/refresh-token-repository';
 import IdentifierUtils from 'utils/identifier-utils';
@@ -23,28 +22,42 @@ export default class RefreshTokenService {
   }
 
   async create(researcher: Researcher, userAgent: string, ipAddress: string) {
-    const jti = IdentifierUtils.generateUUID();
-
-    const tokenPayload: TokenPayload = {
-      sub: researcher.id,
-      jti: jti,
-      type: 'refresh',
-    };
-
-    const expireIn = getJwtConfig('refresh').expiresIn;
-    const expireInMs = ms(expireIn as ms.StringValue);
-
-    const token = this.tokenService.generate(tokenPayload, 'refresh');
-    const tokenHash = await this.encrypter.encrypt(token);
-
     return this.refreshTokenRepository.create({
-      jti,
+      jti: IdentifierUtils.generateUUID(),
       sessionId: IdentifierUtils.generateUUID(),
       userAgent,
       ipAddress,
-      tokenHash,
-      expireIn: new Date(Date.now() + expireInMs),
       researcher,
     });
+  }
+
+  generateAccessToken(researcher: Researcher) {
+    return this.tokenService.generate({
+      sub: researcher.id,
+      email: researcher.email,
+      type: 'access',
+    });
+  }
+
+  async generateRefreshToken(researcher: Researcher, jti: string) {
+    const token = this.tokenService.generate({
+      sub: researcher.id,
+      jti,
+      type: 'refresh',
+    });
+    const tokenHash = await this.encrypter.encrypt(token);
+
+    const expireIn = ms(getJwtConfig('refresh').expiresIn as ms.StringValue);
+
+    await this.refreshTokenRepository.update(
+      { jti },
+      {
+        tokenHash,
+        expireIn,
+        revoked: false,
+      },
+    );
+
+    return token;
   }
 }

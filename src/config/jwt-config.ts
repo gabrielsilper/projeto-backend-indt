@@ -3,11 +3,11 @@ import { SignOptions } from "jsonwebtoken";
 interface JwtConfig {
   access: {
     secret: string;
-    expiresIn: string | SignOptions['expiresIn'];
+    expiresIn: SignOptions['expiresIn'];
   };
   refresh: {
     secret: string;
-    expiresIn: string | SignOptions['expiresIn'];
+    expiresIn: SignOptions['expiresIn'];
   };
 }
 

@@ -2,6 +2,7 @@ import { InvalidCredentialsError } from 'errors/invalid-credentials.error';
 import ResearcherService from './researcher-service';
 import IEncrypterService from 'interfaces/encrypter-service';
 import RefreshTokenService from './refresh-token-service';
+import TokenDto from 'dtos/token-dto';
 
 export default class AuthService {
   constructor(
@@ -15,7 +16,7 @@ export default class AuthService {
     password: string,
     userAgent: string,
     ipAddress: string,
-  ) {
+  ): Promise<TokenDto> {
     const researcher = await this.researcherService.getByEmail(email);
 
     if (!researcher) {
@@ -31,19 +32,27 @@ export default class AuthService {
       throw new InvalidCredentialsError();
     }
 
-    let refreshToken = await this.refreshTokenService.findByUserAndUserAgent(
-      researcher.id,
-      userAgent,
-    );
+    let refreshTokenEntity =
+      await this.refreshTokenService.findByUserAndUserAgent(
+        researcher.id,
+        userAgent,
+      );
 
-    if (!refreshToken) {
-      refreshToken = await this.refreshTokenService.create(
+    if (!refreshTokenEntity) {
+      refreshTokenEntity = await this.refreshTokenService.create(
         researcher,
         userAgent,
         ipAddress,
       );
     }
 
-    
+    const accessToken =
+      this.refreshTokenService.generateAccessToken(researcher);
+    const refreshToken = await this.refreshTokenService.generateRefreshToken(
+      researcher,
+      refreshTokenEntity.jti,
+    );
+
+    return { accessToken, refreshToken };
   }
 }

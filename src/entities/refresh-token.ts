@@ -24,13 +24,13 @@ export default class RefreshToken {
   @Column({ type: 'varchar', nullable: true, name: 'ip_address' })
   ipAddress!: string;
 
-  @Column({ type: 'varchar', nullable: false, length: 255, name: 'token_hash' })
+  @Column({ type: 'varchar', nullable: true, length: 255, name: 'token_hash' })
   tokenHash!: string;
 
   @Column({ type: 'timestamp', nullable: true, name: 'expire_in' })
   expireIn?: Date;
 
-  @Column({ type: 'boolean', default: false })
+  @Column({ type: 'boolean', default: true })
   revoked!: boolean;
 
   @ManyToOne(() => Researcher, { onDelete: 'CASCADE' })
