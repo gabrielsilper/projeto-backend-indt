@@ -22,13 +22,15 @@ export default class RefreshTokenService {
   }
 
   async create(researcher: Researcher, userAgent: string, ipAddress: string) {
-    return this.refreshTokenRepository.create({
+    const refreshToken = this.refreshTokenRepository.create({
       jti: IdentifierUtils.generateUUID(),
       sessionId: IdentifierUtils.generateUUID(),
       userAgent,
       ipAddress,
       researcher,
     });
+
+    return this.refreshTokenRepository.save(refreshToken);
   }
 
   generateAccessToken(researcher: Researcher) {
