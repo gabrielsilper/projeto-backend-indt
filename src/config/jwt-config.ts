@@ -1,11 +1,13 @@
+import { SignOptions } from "jsonwebtoken";
+
 interface JwtConfig {
   access: {
     secret: string;
-    expiresIn: string;
+    expiresIn: string | SignOptions['expiresIn'];
   };
   refresh: {
     secret: string;
-    expiresIn: string;
+    expiresIn: string | SignOptions['expiresIn'];
   };
 }
 
@@ -22,11 +24,11 @@ function getEnvOrThrow(name: string): string {
 const jwtConfig: JwtConfig = {
   access: {
     secret: getEnvOrThrow('JWT_ACCESS_SECRET'),
-    expiresIn: getEnvOrThrow('JWT_ACCESS_EXPIRATION'),
+    expiresIn: getEnvOrThrow('JWT_ACCESS_EXPIRATION') as SignOptions['expiresIn'],
   },
   refresh: {
     secret: getEnvOrThrow('JWT_REFRESH_SECRET'),
-    expiresIn: getEnvOrThrow('JWT_REFRESH_EXPIRATION'),
+    expiresIn: getEnvOrThrow('JWT_REFRESH_EXPIRATION') as SignOptions['expiresIn'],
   },
 };
 

@@ -1,7 +1,7 @@
-import Encrypter from 'interfaces/encrypter';
+import IEncrypterService from 'interfaces/encrypter-service';
 import bcrypt from 'bcrypt';
 
-export default class Bcrypt implements Encrypter {
+export default class Bcrypt implements IEncrypterService {
   private bcrypt = bcrypt;
 
   encrypt(password: string): Promise<string> {
