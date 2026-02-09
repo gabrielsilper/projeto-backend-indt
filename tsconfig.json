@@ -1,35 +1,35 @@
 {
-  "compilerOptions": {
-    /* Ambiente */
-    "target": "ES2022",
-    "lib": ["ES2022"],
+	"compilerOptions": {
+		/* Ambiente */
+		"target": "ES2022",
+		"lib": ["ES2022"],
 
-    /* Módulos (ESM) */
-    "module": "es2022",
-    "moduleResolution": "node",
+		/* Módulos (ESM) */
+		"module": "es2022",
+		"moduleResolution": "node",
 
-    /* Decorators */
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+		/* Decorators */
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 
-    /* Imports e paths */
-    "baseUrl": "./src",
+		/* Imports e paths */
+		"baseUrl": "./src",
 
-    /* Output (caso compile) */
-    "outDir": "./dist",
+		/* Output (caso compile) */
+		"outDir": "./dist",
 
-    /* Type safety */
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+		/* Type safety */
+		"strict": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 
-    /* Interop */
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
+		/* Interop */
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
 
-    /* Qualidade */
-    "noImplicitAny": true
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+		/* Qualidade */
+		"noImplicitAny": true
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "dist"]
 }

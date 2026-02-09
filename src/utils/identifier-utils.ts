@@ -1,7 +1,5 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from "node:crypto";
 
-export default class IdentifierUtils {
-  static generateUUID(): string {
-    return randomUUID();
-  }
+export function generateUUID(): string {
+	return randomUUID();
 }
