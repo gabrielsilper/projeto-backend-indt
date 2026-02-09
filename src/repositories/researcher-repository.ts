@@ -1,9 +1,9 @@
-import Researcher from 'entities/researcher';
-import { appDataSource } from '../database/data-source';
-import { Repository } from 'typeorm';
+import Researcher from "entities/researcher";
+import { Repository } from "typeorm";
+import { appDataSource } from "../database/data-source";
 
 export default class ResearcherRepository extends Repository<Researcher> {
-  constructor() {
-    super(Researcher, appDataSource.manager);
-  }
+	constructor() {
+		super(Researcher, appDataSource.manager);
+	}
 }
